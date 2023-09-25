@@ -100,7 +100,7 @@ const app = async (projectPath, lng) => {
         browserOptions: { launchOptions, viewport: { width: 375, height: 668 } },
       }, {
         onBeforeScreenshot: async (p) => {
-          await p.evaluate(() => window.scrollTo(0, Number.MAX_SAFE_INTEGER));
+          await p.evaluate(() => window.scrollTo(0, document.body.clientHeight - 668 * 2));
           await p.waitForTimeout(2000);
         },
       }),
