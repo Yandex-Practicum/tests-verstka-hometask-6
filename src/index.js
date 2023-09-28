@@ -65,7 +65,7 @@ const app = async (projectPath, lng) => {
       lang(page, lng),
       titleEmmet(page),
       colorScheme(page),
-      switchScheme(baseUrl),
+      //switchScheme(baseUrl),
       blockFullScreen(page, 'header'),
       blockFullScreen(page, 'footer'),
       semanticTags(page, ['header', 'main', 'section', 'footer', 'nav']),
