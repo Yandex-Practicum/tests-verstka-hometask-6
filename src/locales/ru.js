@@ -7,5 +7,6 @@ export default {
     blockNotFullScreen: 'Блок `{{ name }}` должен быть на всю высоту экрана.',
     semanticTagsMissing: 'Отсутствуют семантические теги: `{{ tagNames }}`.',
     notResetMargins: 'Сбросьте браузерные отступы у элементов: {{ tagNames }}.',
+    notFixedBackground: 'У элемента `{{ selector }}` отсутствует свойство `background-attachment: fixed`.',
   },
 };

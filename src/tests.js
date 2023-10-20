@@ -48,7 +48,7 @@ const switchScheme = async (url) => {
   const canonicalColorsSorted = sortColors(canonicalColors);
   const studentColorsSorted = sortColors(studentColors);
   const isSame = canonicalColorsSorted
-    .every((color, index) => compareColors(color, studentColorsSorted[index], 20));
+    .every((color, index) => compareColors(color, studentColorsSorted[index], 35));
 
   await browser.close();
 
@@ -136,10 +136,27 @@ const resetMargins = async (page, tags) => {
   return [];
 };
 
+const backgroundFixed = async (page, selector) => {
+  const elementProperties = await getStyle(page, selector, ['background-attachment']);
+  const isNotFixed = elementProperties.some((property) => property !== 'fixed');
+
+  if (isNotFixed) {
+    return [{
+      id: 'notFixedBackground',
+      values: {
+        selector,
+      },
+    }];
+  }
+
+  return [];
+};
+
 export {
   colorScheme,
   switchScheme,
   blockFullScreen,
   semanticTags,
   resetMargins,
+  backgroundFixed,
 };

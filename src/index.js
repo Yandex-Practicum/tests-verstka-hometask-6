@@ -20,6 +20,7 @@ import {
   blockFullScreen,
   semanticTags,
   resetMargins,
+  backgroundFixed,
 } from './tests.js';
 
 const [, , PROJECT_PATH, LANG = 'ru'] = process.argv;
@@ -65,12 +66,13 @@ const app = async (projectPath, lng) => {
       lang(page, lng),
       titleEmmet(page),
       colorScheme(page),
-      //switchScheme(baseUrl),
+      switchScheme(baseUrl),
       blockFullScreen(page, 'header'),
       blockFullScreen(page, 'footer'),
       semanticTags(page, ['header', 'main', 'section', 'footer', 'nav']),
       resetMargins(page, ['body']),
       horizontalScroll(page),
+      backgroundFixed(page, '.page'),
       compareLayout(baseUrl, {
         canonicalImage: 'layout-canonical-1024.jpg',
         pageImage: 'layout-1024.jpg',
@@ -78,6 +80,9 @@ const app = async (projectPath, lng) => {
         browserOptions: { launchOptions, viewport: { width: 1024, height: 768 } },
       }, {
         onBeforeScreenshot: async (p) => {
+          await p.emulateMediaFeatures([
+            { name: 'prefers-color-scheme', value: 'light' },
+          ]);
           await p.evaluate(() => window.scrollTo(0, Number.MAX_SAFE_INTEGER));
           await p.waitForTimeout(2000);
         },
@@ -89,6 +94,9 @@ const app = async (projectPath, lng) => {
         browserOptions: { launchOptions, viewport: { width: 768, height: 1024 } },
       }, {
         onBeforeScreenshot: async (p) => {
+          await p.emulateMediaFeatures([
+            { name: 'prefers-color-scheme', value: 'light' },
+          ]);
           await p.evaluate(() => window.scrollTo(0, Number.MAX_SAFE_INTEGER));
           await p.waitForTimeout(2000);
         },
@@ -100,6 +108,9 @@ const app = async (projectPath, lng) => {
         browserOptions: { launchOptions, viewport: { width: 375, height: 668 } },
       }, {
         onBeforeScreenshot: async (p) => {
+          await p.emulateMediaFeatures([
+            { name: 'prefers-color-scheme', value: 'light' },
+          ]);
           await p.evaluate(() => window.scrollTo(0, document.body.clientHeight - 668 * 2));
           await p.waitForTimeout(2000);
         },
