@@ -35,7 +35,9 @@ const switchScheme = async (url) => {
     };
   }
 
-  await page.click(buttonSelector);
+  await page.emulateMediaFeatures([
+    { name: 'prefers-color-scheme', value: 'dark' },
+  ]);
   await page.evaluate(() => {
     const imgs = document.querySelectorAll('img');
     imgs.forEach((img) => img.remove());
