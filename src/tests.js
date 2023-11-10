@@ -4,6 +4,7 @@ import {
   launchBrowser,
   hasElementBySelectors,
   getStyle,
+  compareLayout,
 } from 'lib-verstka-tests';
 import {
   sortColors,
@@ -53,6 +54,21 @@ const switchScheme = async (url) => {
     .every((color, index) => compareColors(color, studentColorsSorted[index], 35));
 
   await browser.close();
+
+  await compareLayout(url, {
+    canonicalImage: 'layout-canonical-dark-full.jpg',
+    pageImage: 'layout-dark-full.jpg',
+    outputImage: 'output-dark.jpg',
+    browserOptions: { viewport: { width: 1024, height: 768 } },
+  }, {
+    onBeforeScreenshot: async (p) => {
+      await p.emulateMediaFeatures([
+        { name: 'prefers-color-scheme', value: 'dark' },
+      ]);
+      await p.evaluate(() => window.scrollTo(0, Number.MAX_SAFE_INTEGER));
+      await p.waitForTimeout(2000);
+    },
+  });
 
   if (!isSame) {
     return {
